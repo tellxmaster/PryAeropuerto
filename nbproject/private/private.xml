@@ -4,9 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/controllers/PasajeroController.java</file>
+            <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/controllers/AeropuertoController.java</file>
             <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/models/Pasajero.java</file>
+            <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/models/Avion.java</file>
+            <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/controllers/AvionController.java</file>
             <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/controllers/UsuarioController.java</file>
             <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/services/UsuarioService.java</file>
+            <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/views/AdminForm.java</file>
             <file>file:/home/tellxmaster/NetBeansProjects/PRYAeropuerto/src/services/PasajeroService.java</file>
         </group>
     </open-files>

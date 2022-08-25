@@ -135,8 +135,13 @@ public class LoginForm extends javax.swing.JFrame {
             if (usuarioService.login(user, pwdN)) {
                 String tipo = usuarioService.recuperarUsuarioByUsername(user).getTipo_usr();
                 this.dispose();
-                ReservaForm rf = new ReservaForm();
-                rf.setVisible(true);         
+                if(tipo.equals("admin")){
+                    AdminForm af = new AdminForm();
+                    af.setVisible(true);
+                }else if(tipo.equals("user")){
+                    ReservaForm rf = new ReservaForm();
+                    rf.setVisible(true); 
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Contraseña y o Usuario Incorrecto");
             }

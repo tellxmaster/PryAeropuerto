@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package views;
 
 import java.awt.Color;
@@ -188,7 +185,7 @@ public class RegisterForm extends javax.swing.JFrame {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Usuario usuario = new Usuario(nombreUsuario, pass, "admin");
+        Usuario usuario = new Usuario(nombreUsuario, pass, "user");
         Pasajero pasajero = new Pasajero(nombre, apellido, direccion, telefono, email, fechaNac);
         usuario.setPasajero(pasajero);
         pasajero.setUsuario(usuario);
