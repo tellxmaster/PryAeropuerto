@@ -3,18 +3,20 @@ package views;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import models.Usuario;
 import services.UsuarioService;
 import util.Hash;
 
 public class LoginForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginForm
-     */
+    private static Usuario usuario;
+    
     public LoginForm() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,10 +138,10 @@ public class LoginForm extends javax.swing.JFrame {
                 String tipo = usuarioService.recuperarUsuarioByUsername(user).getTipo_usr();
                 this.dispose();
                 if(tipo.equals("admin")){
-                    AdminForm af = new AdminForm();
+                    AdminForm af = new AdminForm(usuarioService.recuperarUsuarioByUsername(user));
                     af.setVisible(true);
                 }else if(tipo.equals("user")){
-                    ReservaForm rf = new ReservaForm();
+                    ReservaForm rf = new ReservaForm(usuarioService.recuperarUsuarioByUsername(user));
                     rf.setVisible(true); 
                 }
             } else {

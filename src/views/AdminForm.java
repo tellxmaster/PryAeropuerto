@@ -5,6 +5,7 @@ import javax.swing.DefaultComboBoxModel;
 import models.Aeropuerto;
 import models.Avion;
 import models.Piloto;
+import models.Usuario;
 import models.Vuelo;
 import services.AeropuertoService;
 import services.AvionService;
@@ -17,9 +18,18 @@ public class AdminForm extends javax.swing.JFrame {
     private static final AeropuertoService aeropuertoService = new AeropuertoService();
     private static final AvionService avionService = new AvionService();
     private static final VueloService vueloService = new VueloService();
+    private static Usuario usuario;
     
     public AdminForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    public AdminForm(Usuario usuario) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.usuario = usuario;
+        
     }
 
     /**
@@ -86,6 +96,8 @@ public class AdminForm extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(720, 520));
         setResizable(false);
 
+        jTabbedPane1.setBackground(new java.awt.Color(204, 204, 255));
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane1MouseClicked(evt);
@@ -139,14 +151,14 @@ public class AdminForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(LoginForm1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(LoginForm1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registrar Pilotos", jPanel2);
@@ -198,14 +210,14 @@ public class AdminForm extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(LoginForm3, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(LoginForm3, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registrar Aeropuertos", jPanel4);
@@ -266,14 +278,14 @@ public class AdminForm extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(LoginForm2, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(LoginForm2, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registrar Aviones", jPanel3);
@@ -344,14 +356,14 @@ public class AdminForm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(LoginForm, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(LoginForm, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registrar Vuelos", jPanel1);

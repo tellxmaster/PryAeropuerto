@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class TipoReservaController {
     public void registrar( TipoReserva tipoReserva )
     {
-        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYTipoReservaPU");
+        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         cl.getTransaction().begin();
         cl.persist(tipoReserva);
@@ -19,7 +19,7 @@ public class TipoReservaController {
 
 
     public List<TipoReserva> listar(){
-        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYTipoReservaPU");
+        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         TypedQuery<TipoReserva> query = cl.createQuery("SELECT u FROM TipoReserva u ", TipoReserva.class);
         List<TipoReserva> results = query.getResultList();
@@ -27,7 +27,7 @@ public class TipoReservaController {
     }
 
     public TipoReserva recuperarTipoReservaById(int id){
-        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYTipoReservaPU");
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         TipoReserva TipoReserva = cl.createQuery("Select u from TipoReserva u WHERE u.id = :id", TipoReserva.class).setParameter("id", id).getSingleResult();
         cl.close();
@@ -36,7 +36,7 @@ public class TipoReservaController {
     }
 
     public TipoReserva recuperarTipoReservaByNombre(String nombreTipoReserva){
-        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYTipoReservaPU");
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         TipoReserva TipoReserva = cl.createQuery("Select u from TipoReserva u WHERE u.nombreTipoReserva = :nombreTipoReserva", TipoReserva.class).setParameter("nombreTipoReserva", nombreTipoReserva).getSingleResult();
         cl.close();
@@ -51,7 +51,7 @@ public class TipoReservaController {
     }
 
     public void eliminar(){
-        EntityManagerFactory emf= Persistence.createEntityManagerFactory("PRYTipoReservaPU");
+        EntityManagerFactory emf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager em= emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("Delete from TipoReserva").executeUpdate();

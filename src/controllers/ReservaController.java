@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class ReservaController {
     public void registrar( Reserva reserva )
     {
-        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYReservaPU");
+        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         cl.getTransaction().begin();
         cl.persist(reserva);
@@ -19,7 +19,7 @@ public class ReservaController {
 
 
     public List<Reserva> listar(){
-        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYReservaPU");
+        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         TypedQuery<Reserva> query = cl.createQuery("SELECT u FROM Reserva u ", Reserva.class);
         List<Reserva> results = query.getResultList();
@@ -27,7 +27,7 @@ public class ReservaController {
     }
 
     public Reserva recuperarReservaById(int id){
-        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYReservaPU");
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         Reserva Reserva = cl.createQuery("Select u from Reserva u WHERE u.id = :id", Reserva.class).setParameter("id", id).getSingleResult();
         cl.close();
@@ -36,7 +36,7 @@ public class ReservaController {
     }
 
     public Reserva recuperarReservaByNombre(String nombreReserva){
-        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYReservaPU");
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         Reserva Reserva = cl.createQuery("Select u from Reserva u WHERE u.nombreReserva = :nombreReserva", Reserva.class).setParameter("nombreReserva", nombreReserva).getSingleResult();
         cl.close();

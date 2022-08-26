@@ -3,6 +3,9 @@ package views;
 
 import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import models.Usuario;
 import models.Vuelo;
 import services.AeropuertoService;
 import services.AvionService;
@@ -16,11 +19,22 @@ public class ReservaForm extends javax.swing.JFrame {
     private static final AeropuertoService aeropuertoService = new AeropuertoService();
     private static final AvionService avionService = new AvionService();
     private static final VueloService vueloService = new VueloService();
+    private static Usuario usuario;
     
     public ReservaForm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
+    
+    
+    public ReservaForm(Usuario usuario) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.usuario = usuario;
+        lblUsuario.setText(this.usuario.getNombreUsuario());
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,8 +54,14 @@ public class ReservaForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listVuelos = new javax.swing.JList<>();
         lblComprarBoletos = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        LoginTItle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(720, 520));
@@ -58,11 +78,10 @@ public class ReservaForm extends javax.swing.JFrame {
         LoginForm.setBackground(new java.awt.Color(204, 204, 255));
         LoginForm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        LoginTItle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         LoginTItle.setForeground(new java.awt.Color(102, 102, 255));
         LoginTItle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LoginTItle.setText("Reserva de Vuelos");
-        LoginForm.add(LoginTItle, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 31, 540, -1));
+        LoginTItle.setText("Usuario:");
+        LoginForm.add(LoginTItle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 70, 40));
 
         jButton1.setBackground(new java.awt.Color(51, 153, 255));
         jButton1.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
@@ -77,6 +96,11 @@ public class ReservaForm extends javax.swing.JFrame {
         });
         LoginForm.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 140, 40));
 
+        cboDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboDestinoActionPerformed(evt);
+            }
+        });
         LoginForm.add(cboDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 180, 40));
 
         cboOrigen.addItemListener(new java.awt.event.ItemListener() {
@@ -94,7 +118,7 @@ public class ReservaForm extends javax.swing.JFrame {
         jLabel2.setText("Origen");
         LoginForm.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 180, -1));
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listVuelos);
 
         LoginForm.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 540, -1));
 
@@ -103,6 +127,9 @@ public class ReservaForm extends javax.swing.JFrame {
         lblComprarBoletos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add-icon.png"))); // NOI18N
         lblComprarBoletos.setText("Comprar Boletos");
         lblComprarBoletos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblComprarBoletosMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblComprarBoletosMouseEntered(evt);
             }
@@ -110,7 +137,28 @@ public class ReservaForm extends javax.swing.JFrame {
                 lblComprarBoletosMouseExited(evt);
             }
         });
-        LoginForm.add(lblComprarBoletos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 540, -1));
+        LoginForm.add(lblComprarBoletos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 540, -1));
+
+        jLabel3.setText("Avion");
+        LoginForm.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
+
+        jLabel4.setText("Id");
+        LoginForm.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+
+        jLabel5.setText("Origen");
+        LoginForm.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, -1, -1));
+
+        jLabel6.setText("Destino");
+        LoginForm.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, -1, -1));
+
+        lblUsuario.setText("nombreUsuario");
+        LoginForm.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 140, 40));
+
+        LoginTItle1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LoginTItle1.setForeground(new java.awt.Color(102, 102, 255));
+        LoginTItle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LoginTItle1.setText("Reserva de Vuelos");
+        LoginForm.add(LoginTItle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 31, 540, -1));
 
         javax.swing.GroupLayout ContentLayout = new javax.swing.GroupLayout(Content);
         Content.setLayout(ContentLayout);
@@ -144,7 +192,14 @@ public class ReservaForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        DefaultListModel vuelos = new DefaultListModel();
+        String origen = cboOrigen.getSelectedItem().toString();
+        String destino = cboDestino.getSelectedItem().toString();
+        for(Vuelo vuelo : vueloService.recuperarDestinosByOrigenAndDestino(origen, destino)){
+            vuelos.addElement(" "+vuelo.getId()+"          "+vuelo.getCiudadOrigen()+"          "+vuelo.getCiudadDestino()+"          "+vuelo.getAvion().getFabricante()+" "+vuelo.getAvion().getModelo());
+        }
+        
+        listVuelos.setModel(vuelos);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblComprarBoletosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblComprarBoletosMouseEntered
@@ -178,6 +233,22 @@ public class ReservaForm extends javax.swing.JFrame {
         
         cboOrigen.setModel(origenModels);
     }//GEN-LAST:event_formWindowOpened
+
+    private void lblComprarBoletosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblComprarBoletosMouseClicked
+        if(!listVuelos.isSelectionEmpty()){
+            Usuario usuario = this.usuario;
+            Vuelo vuelo = vueloService.recuperarVueloById(listVuelos.getSelectedIndex()+1);
+            TicketForm tf = new TicketForm(vuelo, usuario);
+            tf.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un vuelo de la lista antes de comprar");
+        }
+        
+    }//GEN-LAST:event_lblComprarBoletosMouseClicked
+
+    private void cboDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDestinoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboDestinoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,13 +289,19 @@ public class ReservaForm extends javax.swing.JFrame {
     private javax.swing.JPanel Content;
     private javax.swing.JPanel LoginForm;
     private javax.swing.JLabel LoginTItle;
+    private javax.swing.JLabel LoginTItle1;
     private javax.swing.JComboBox<String> cboDestino;
     private javax.swing.JComboBox<String> cboOrigen;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblComprarBoletos;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JList<String> listVuelos;
     // End of variables declaration//GEN-END:variables
 }

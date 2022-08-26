@@ -28,6 +28,10 @@ public class VueloService {
     public List<Vuelo> recuperarDestinosByOrigen(String ciudad){
         return vc.recuperarDestinosByOrigen(ciudad);
     }
+    
+    public List<Vuelo> recuperarDestinosByOrigenAndDestino(String origen, String destino){
+        return vc.recuperarDestinosByOrigenAndDestino(origen, destino);
+    }
 
     public void eliminar(){
         vc.eliminar();

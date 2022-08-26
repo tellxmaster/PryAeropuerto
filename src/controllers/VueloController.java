@@ -71,4 +71,16 @@ public class VueloController {
         em.close();
         emf.close();
     }
+
+    public List<Vuelo> recuperarDestinosByOrigenAndDestino(String origen, String destino) {
+        
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
+        EntityManager cl = clf.createEntityManager();
+        TypedQuery<Vuelo> query = cl.createQuery("Select a from Vuelo a WHERE a.ciudadOrigen = :origen AND a.ciudadDestino = :destino", Vuelo.class).setParameter("origen", origen).setParameter("destino", destino);
+        List<Vuelo> results = query.getResultList();
+        cl.close();
+        clf.close();
+        return results;
+       
+    }
 }
