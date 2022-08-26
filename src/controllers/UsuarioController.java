@@ -51,6 +51,19 @@ public class UsuarioController {
         return usuario;
     }
     
+    public boolean comprobarUsuario(String nombreUsuario){
+        try{
+            EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
+            EntityManager cl = clf.createEntityManager();
+            Usuario usuario = cl.createQuery("Select u from Usuario u WHERE u.nombreUsuario = :nombreUsuario", Usuario.class).setParameter("nombreUsuario", nombreUsuario).getSingleResult();
+            cl.close();
+            clf.close();
+            return true;
+        }catch(Exception ex){
+            return false;
+        }
+    }
+    
   
     public boolean login(String nombreUsuario, String password){
         EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");

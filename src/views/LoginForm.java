@@ -134,7 +134,7 @@ public class LoginForm extends javax.swing.JFrame {
         if (!user.equals("") && !pwd.equals("")) {
             String pwdN = Hash.sha1(pwd);
             System.out.println(pwdN);
-            if (usuarioService.login(user, pwdN)) {
+            if (usuarioService.comprobarUsuario(user) && usuarioService.login(user, pwdN)) {
                 String tipo = usuarioService.recuperarUsuarioByUsername(user).getTipo_usr();
                 this.dispose();
                 if(tipo.equals("admin")){

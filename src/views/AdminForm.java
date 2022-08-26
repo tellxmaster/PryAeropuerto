@@ -2,6 +2,7 @@
 package views;
 import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import models.Aeropuerto;
 import models.Avion;
 import models.Piloto;
@@ -140,7 +141,7 @@ public class AdminForm extends javax.swing.JFrame {
         LoginForm1.add(txtNombrePilot, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 230, 36));
 
         cboExperienciaPilot.setBackground(new java.awt.Color(255, 255, 255));
-        cboExperienciaPilot.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BAJA", "MEDIA", "ALTA" }));
+        cboExperienciaPilot.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Baja", "Media", "Alta" }));
         cboExperienciaPilot.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         LoginForm1.add(cboExperienciaPilot, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 230, 40));
 
@@ -397,11 +398,17 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarVueloActionPerformed
 
     private void btnRegistrarPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPilotoActionPerformed
-        String nombrePilot = txtNombrePilot.getText();
-        String apellidoPilot = txtApellidoPilot.getText();
-        int experienciaPilot = cboExperienciaPilot.getSelectedIndex()+1;
-        Piloto piloto = new Piloto(nombrePilot, apellidoPilot, experienciaPilot);
-        pilotoService.guardar(piloto);
+        try{
+            String nombrePilot = txtNombrePilot.getText();
+            String apellidoPilot = txtApellidoPilot.getText();
+            int experienciaPilot = cboExperienciaPilot.getSelectedIndex()+1;
+            Piloto piloto = new Piloto(nombrePilot, apellidoPilot, experienciaPilot);
+            pilotoService.guardar(piloto);
+            JOptionPane.showMessageDialog(null, "Piloto agregado correctamente");
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error: "+ex.getMessage());
+        }
+        
     }//GEN-LAST:event_btnRegistrarPilotoActionPerformed
 
     private void btnRegistrarAvionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAvionActionPerformed

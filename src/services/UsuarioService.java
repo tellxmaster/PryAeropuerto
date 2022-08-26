@@ -30,6 +30,10 @@ public class UsuarioService {
     public boolean login(String nombreUsuario, String password){
         return uc.login(nombreUsuario, password);
     }
+    
+    public boolean comprobarUsuario(String nombreUsuario){
+        return uc.comprobarUsuario(nombreUsuario);
+    }
 
     public void eliminar(){
         uc.eliminar();
