@@ -1,12 +1,23 @@
 
 package views;
 import java.awt.Color;
+import javax.swing.DefaultComboBoxModel;
+import models.Aeropuerto;
+import models.Avion;
+import models.Piloto;
+import models.Vuelo;
+import services.AeropuertoService;
+import services.AvionService;
+import services.PilotoService;
+import services.VueloService;
 
 public class AdminForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AdminForm
-     */
+    private static final PilotoService pilotoService = new PilotoService();
+    private static final AeropuertoService aeropuertoService = new AeropuertoService();
+    private static final AvionService avionService = new AvionService();
+    private static final VueloService vueloService = new VueloService();
+    
     public AdminForm() {
         initComponents();
     }
@@ -34,15 +45,15 @@ public class AdminForm extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         LoginForm3 = new util.RoundPanel(25, new Color(239,239,239));
         LoginTItle3 = new javax.swing.JLabel();
-        txtFechaNac3 = new util.RoundJTextField();
+        txtAeropuertoNombre = new util.RoundJTextField();
         btnRegistrarAeropuertos = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        txtNombre3 = new util.RoundJTextField();
-        txtApellido3 = new util.RoundJTextField();
-        txtTelefono3 = new util.RoundJTextField();
+        txtPaisAeropuerto = new util.RoundJTextField();
+        txtProvinciaNombre = new util.RoundJTextField();
+        txtCiudadAero = new util.RoundJTextField();
         jPanel3 = new javax.swing.JPanel();
         LoginForm2 = new util.RoundPanel(25, new Color(239,239,239));
         LoginTItle2 = new javax.swing.JLabel();
@@ -54,24 +65,32 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         txtFabricante = new util.RoundJTextField();
         txtNumAsientos = new util.RoundJTextField();
-        cboAeropuerto = new javax.swing.JComboBox<>();
+        cboAeropuertosAv = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         LoginForm = new util.RoundPanel(25, new Color(239,239,239));
         LoginTItle = new javax.swing.JLabel();
-        txtFechaNac = new util.RoundJTextField();
+        txtCiudadDestino = new util.RoundJTextField();
         btnRegistrarVuelo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtNombre = new util.RoundJTextField();
+        txtOrigen = new util.RoundJTextField();
+        cboAeropuertosVue = new javax.swing.JComboBox<>();
+        cboPilotosVue = new javax.swing.JComboBox<>();
         cboAviones = new javax.swing.JComboBox<>();
-        cboPilotos = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(720, 520));
         setMinimumSize(new java.awt.Dimension(720, 520));
         setResizable(false);
+
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -142,7 +161,7 @@ public class AdminForm extends javax.swing.JFrame {
         LoginTItle3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LoginTItle3.setText("Nuevo Aeropuerto");
         LoginForm3.add(LoginTItle3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 490, -1));
-        LoginForm3.add(txtFechaNac3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 230, 36));
+        LoginForm3.add(txtAeropuertoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 230, 36));
 
         btnRegistrarAeropuertos.setBackground(new java.awt.Color(51, 153, 255));
         btnRegistrarAeropuertos.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
@@ -168,9 +187,9 @@ public class AdminForm extends javax.swing.JFrame {
 
         jLabel30.setText("Nombre");
         LoginForm3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 230, -1));
-        LoginForm3.add(txtNombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 230, 36));
-        LoginForm3.add(txtApellido3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 230, 36));
-        LoginForm3.add(txtTelefono3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 230, 36));
+        LoginForm3.add(txtPaisAeropuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 230, 36));
+        LoginForm3.add(txtProvinciaNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 230, 36));
+        LoginForm3.add(txtCiudadAero, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 230, 36));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -227,12 +246,18 @@ public class AdminForm extends javax.swing.JFrame {
 
         jLabel22.setText("Modelo");
         LoginForm2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 230, -1));
+
+        txtFabricante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFabricanteActionPerformed(evt);
+            }
+        });
         LoginForm2.add(txtFabricante, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 230, 36));
         LoginForm2.add(txtNumAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 230, 36));
 
-        cboAeropuerto.setBackground(new java.awt.Color(255, 255, 255));
-        cboAeropuerto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        LoginForm2.add(cboAeropuerto, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 230, 40));
+        cboAeropuertosAv.setBackground(new java.awt.Color(255, 255, 255));
+        cboAeropuertosAv.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        LoginForm2.add(cboAeropuertosAv, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 230, 40));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -263,7 +288,7 @@ public class AdminForm extends javax.swing.JFrame {
         LoginTItle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LoginTItle.setText("Nuevo Vuelo");
         LoginForm.add(LoginTItle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 490, -1));
-        LoginForm.add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 230, 36));
+        LoginForm.add(txtCiudadDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 230, 36));
 
         btnRegistrarVuelo.setBackground(new java.awt.Color(51, 153, 255));
         btnRegistrarVuelo.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
@@ -276,9 +301,9 @@ public class AdminForm extends javax.swing.JFrame {
                 btnRegistrarVueloActionPerformed(evt);
             }
         });
-        LoginForm.add(btnRegistrarVuelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 490, 43));
+        LoginForm.add(btnRegistrarVuelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 490, 43));
 
-        jLabel1.setText("Origen");
+        jLabel1.setText("Ciudad Origen");
         LoginForm.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 230, -1));
 
         jLabel2.setText("Aeropuerto");
@@ -287,17 +312,30 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel4.setText("Piloto");
         LoginForm.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 230, -1));
 
-        jLabel6.setText("Destino");
+        jLabel6.setText("Ciudad Destino");
         LoginForm.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 230, -1));
-        LoginForm.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 230, 36));
+
+        txtOrigen.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtOrigenFocusLost(evt);
+            }
+        });
+        LoginForm.add(txtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 230, 36));
+
+        cboAeropuertosVue.setBackground(new java.awt.Color(255, 255, 255));
+        cboAeropuertosVue.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        LoginForm.add(cboAeropuertosVue, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 230, 40));
+
+        cboPilotosVue.setBackground(new java.awt.Color(255, 255, 255));
+        cboPilotosVue.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        LoginForm.add(cboPilotosVue, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 230, 40));
 
         cboAviones.setBackground(new java.awt.Color(255, 255, 255));
         cboAviones.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        LoginForm.add(cboAviones, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 230, 40));
+        LoginForm.add(cboAviones, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 490, 40));
 
-        cboPilotos.setBackground(new java.awt.Color(255, 255, 255));
-        cboPilotos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        LoginForm.add(cboPilotos, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 230, 40));
+        jLabel3.setText("Avion");
+        LoginForm.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 230, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -333,32 +371,81 @@ public class AdminForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarVueloActionPerformed
+        String ciudadOrigen = txtOrigen.getText();
+        String ciudadDestino = txtCiudadDestino.getText();
+        Aeropuerto aeropuerto = aeropuertoService.recuperarAeropuetoByNombre(cboAeropuertosVue.getSelectedItem().toString());
+        Piloto piloto = pilotoService.recuperarPilotoById(cboPilotosVue.getSelectedIndex()+1);
+        System.out.println(cboAviones.getSelectedIndex());
+        Avion avion = avionService.recuperarAvionById(cboAviones.getSelectedIndex()+1);
         
-
-
-      
-
-        //Usuario usuario = new Usuario(nombreUsuario, pass, "admin");
-        //Pasajero pasajero = new Pasajero(nombre, apellido, direccion, telefono, email, fechaNac);
-        //usuario.setPasajero(pasajero);
-        //pasajero.setUsuario(usuario);
-
-        //pasajeroService.guardar(pasajero);
-        //JOptionPane.showMessageDialog(null, "Usuario Registrado Correctamente");
-
+        
+        Vuelo vuelo = new Vuelo(ciudadOrigen,ciudadDestino, aeropuerto, avion, piloto);
+        
+        vueloService.guardar(vuelo);
     }//GEN-LAST:event_btnRegistrarVueloActionPerformed
 
     private void btnRegistrarPilotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPilotoActionPerformed
-        //pilotoService
+        String nombrePilot = txtNombrePilot.getText();
+        String apellidoPilot = txtApellidoPilot.getText();
+        int experienciaPilot = cboExperienciaPilot.getSelectedIndex()+1;
+        Piloto piloto = new Piloto(nombrePilot, apellidoPilot, experienciaPilot);
+        pilotoService.guardar(piloto);
     }//GEN-LAST:event_btnRegistrarPilotoActionPerformed
 
     private void btnRegistrarAvionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAvionActionPerformed
-        // TODO add your handling code here:
+        String fabricante = txtFabricante.getText();
+        String modelo = txtModelo.getText();
+        int numAsientos = Integer.parseInt(txtNumAsientos.getText());
+        Aeropuerto aeropuerto = aeropuertoService.recuperarAeropuetoByNombre(cboAeropuertosAv.getSelectedItem().toString());
+        Avion avion = new Avion(modelo, numAsientos, fabricante, aeropuerto);
+        avion.toString();
+        avionService.guardar(avion);
     }//GEN-LAST:event_btnRegistrarAvionActionPerformed
 
     private void btnRegistrarAeropuertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAeropuertosActionPerformed
-        // TODO add your handling code here:
+        String pais = txtPaisAeropuerto.getText();
+        String nombre = txtAeropuertoNombre.getText();
+        String provincia = txtProvinciaNombre.getText();
+        String ciudad = txtCiudadAero.getText();
+        Aeropuerto aeropuerto = new Aeropuerto(nombre,ciudad,provincia,pais);
+        aeropuertoService.guardar(aeropuerto);
     }//GEN-LAST:event_btnRegistrarAeropuertosActionPerformed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        DefaultComboBoxModel aeroModels = new DefaultComboBoxModel();
+        for(Aeropuerto aeropuerto : aeropuertoService.listar()){
+            aeroModels.addElement(aeropuerto.getNombreAeropuerto());
+        }
+        
+        cboAeropuertosAv.setModel(aeroModels);
+        
+        DefaultComboBoxModel pilotoModels = new DefaultComboBoxModel();
+        for(Piloto piloto : pilotoService.listar()){
+            pilotoModels.addElement(piloto.getNombre()+" "+piloto.getApellido());
+        }
+        
+        cboPilotosVue.setModel(pilotoModels);
+        
+        DefaultComboBoxModel avionModels = new DefaultComboBoxModel();
+        for(Avion avion : avionService.listar()){
+            avionModels.addElement(avion.getModelo());
+        }
+        
+        cboAviones.setModel(avionModels);
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void txtFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFabricanteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFabricanteActionPerformed
+
+    private void txtOrigenFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtOrigenFocusLost
+        DefaultComboBoxModel aerosCityModels = new DefaultComboBoxModel();
+        String ciuOrigen = txtOrigen.getText();
+        for(Aeropuerto aeropuerto : aeropuertoService.recuperarAeropuertosByCiudad(ciuOrigen)){
+            aerosCityModels.addElement(aeropuerto.getNombreAeropuerto());
+        }
+        cboAeropuertosVue.setModel(aerosCityModels);
+    }//GEN-LAST:event_txtOrigenFocusLost
 
     /**
      * @param args the command line arguments
@@ -408,10 +495,11 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrarAvion;
     private javax.swing.JButton btnRegistrarPiloto;
     private javax.swing.JButton btnRegistrarVuelo;
-    private javax.swing.JComboBox<String> cboAeropuerto;
+    private javax.swing.JComboBox<String> cboAeropuertosAv;
+    private javax.swing.JComboBox<String> cboAeropuertosVue;
     private javax.swing.JComboBox<String> cboAviones;
     private javax.swing.JComboBox<String> cboExperienciaPilot;
-    private javax.swing.JComboBox<String> cboPilotos;
+    private javax.swing.JComboBox<String> cboPilotosVue;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
@@ -423,6 +511,7 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -432,16 +521,16 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private util.RoundJTextField txtApellido3;
+    private util.RoundJTextField txtAeropuertoNombre;
     private util.RoundJTextField txtApellidoPilot;
+    private util.RoundJTextField txtCiudadAero;
+    private util.RoundJTextField txtCiudadDestino;
     private util.RoundJTextField txtFabricante;
-    private util.RoundJTextField txtFechaNac;
-    private util.RoundJTextField txtFechaNac3;
     private util.RoundJTextField txtModelo;
-    private util.RoundJTextField txtNombre;
-    private util.RoundJTextField txtNombre3;
     private util.RoundJTextField txtNombrePilot;
     private util.RoundJTextField txtNumAsientos;
-    private util.RoundJTextField txtTelefono3;
+    private util.RoundJTextField txtOrigen;
+    private util.RoundJTextField txtPaisAeropuerto;
+    private util.RoundJTextField txtProvinciaNombre;
     // End of variables declaration//GEN-END:variables
 }

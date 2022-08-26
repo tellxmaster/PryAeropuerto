@@ -4,6 +4,7 @@ package controllers;
 import java.util.List;
 import javax.persistence.*;
 import models.Aeropuerto;
+import models.Avion;
 
 /**
  *
@@ -35,6 +36,26 @@ public class AeropuertoController {
         cl.close();
         clf.close();
         return aeropuerto;
+    }
+    
+    public Aeropuerto recuperarAeropuertoByNombre(String nombreAeropuerto){
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
+        EntityManager cl = clf.createEntityManager();
+        Aeropuerto aeropuerto = cl.createQuery("Select a from Aeropuerto a WHERE a.nombreAeropuerto = :nombreAeropuerto", Aeropuerto.class).setParameter("nombreAeropuerto", nombreAeropuerto).getSingleResult();
+        cl.close();
+        clf.close();
+        return aeropuerto;
+    }
+    
+        
+    public List<Aeropuerto> recuperarAeropuertosByCiudad(String ciudad){
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
+        EntityManager cl = clf.createEntityManager();
+        TypedQuery<Aeropuerto> query = cl.createQuery("Select a from Aeropuerto a WHERE a.ciudad = :ciudad", Aeropuerto.class).setParameter("ciudad", ciudad);
+        List<Aeropuerto> results = query.getResultList();
+        cl.close();
+        clf.close();
+        return results;
     }
 
   

@@ -185,7 +185,7 @@ public class RegisterForm extends javax.swing.JFrame {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Usuario usuario = new Usuario(nombreUsuario, pass, "user");
+        Usuario usuario = new Usuario(nombreUsuario, pass, "admin");
         Pasajero pasajero = new Pasajero(nombre, apellido, direccion, telefono, email, fechaNac);
         usuario.setPasajero(pasajero);
         pasajero.setUsuario(usuario);

@@ -27,6 +27,15 @@ public class AeropuertoService {
     public Aeropuerto recuperarAropuertoById(int id){
         return ac.recuperarAropuertoById(id);
     }
+    
+    public Aeropuerto recuperarAeropuetoByNombre(String nombreaeropuerto){
+        return ac.recuperarAeropuertoByNombre(nombreaeropuerto);
+    }
+    
+    public List<Aeropuerto> recuperarAeropuertosByCiudad(String ciudad){
+        return ac.recuperarAeropuertosByCiudad(ciudad);
+    }
+    
 
     public void imprimir(List<Aeropuerto> aeropuertos){
         ac.imprimir(aeropuertos);

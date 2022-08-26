@@ -6,7 +6,8 @@ import java.util.List;
 import models.Vuelo;
 
 public class VueloService {
-        private static final VueloController vc = new VueloController();
+    
+    private static final VueloController vc = new VueloController();
     
     public void guardar(Vuelo vuelo){
         vc.registrar(vuelo);
@@ -22,6 +23,10 @@ public class VueloService {
 
     public void imprimir(List<Vuelo> vuelos){
         vc.imprimir(vuelos);
+    }
+    
+    public List<Vuelo> recuperarDestinosByOrigen(String ciudad){
+        return vc.recuperarDestinosByOrigen(ciudad);
     }
 
     public void eliminar(){

@@ -2,12 +2,21 @@
 package views;
 
 import java.awt.Color;
+import javax.swing.DefaultComboBoxModel;
+import models.Vuelo;
+import services.AeropuertoService;
+import services.AvionService;
+import services.PilotoService;
+import services.VueloService;
 
 public class ReservaForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ReservaForm
-     */
+    
+    private static final PilotoService pilotoService = new PilotoService();
+    private static final AeropuertoService aeropuertoService = new AeropuertoService();
+    private static final AvionService avionService = new AvionService();
+    private static final VueloService vueloService = new VueloService();
+    
     public ReservaForm() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -26,8 +35,8 @@ public class ReservaForm extends javax.swing.JFrame {
         LoginForm = new util.RoundPanel(25,new Color(239,239,239));
         LoginTItle = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cboDestino = new javax.swing.JComboBox<>();
+        cboOrigen = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -38,6 +47,11 @@ public class ReservaForm extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(720, 520));
         setMinimumSize(new java.awt.Dimension(720, 520));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         Content.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -63,9 +77,14 @@ public class ReservaForm extends javax.swing.JFrame {
         });
         LoginForm.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 140, 40));
 
-        LoginForm.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 180, 40));
+        LoginForm.add(cboDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 180, 40));
 
-        LoginForm.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 180, 40));
+        cboOrigen.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboOrigenItemStateChanged(evt);
+            }
+        });
+        LoginForm.add(cboOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 180, 40));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel1.setText("Destino");
@@ -136,6 +155,30 @@ public class ReservaForm extends javax.swing.JFrame {
         lblComprarBoletos.setForeground(Color.BLACK);
     }//GEN-LAST:event_lblComprarBoletosMouseExited
 
+    private void cboOrigenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboOrigenItemStateChanged
+        DefaultComboBoxModel destinoModels = new DefaultComboBoxModel();
+        
+        String origen = cboOrigen.getSelectedItem().toString();
+        
+        for(Vuelo vuelo : vueloService.listar()){
+            destinoModels.addElement(vuelo.getCiudadDestino());
+        }
+        
+        cboDestino.setModel(destinoModels);
+        
+    }//GEN-LAST:event_cboOrigenItemStateChanged
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        DefaultComboBoxModel origenModels = new DefaultComboBoxModel();
+        
+        origenModels.addElement("Seleccione un Origen");
+        for(Vuelo vuelo : vueloService.listar()){
+            origenModels.addElement(vuelo.getCiudadOrigen());
+        }
+        
+        cboOrigen.setModel(origenModels);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -175,9 +218,9 @@ public class ReservaForm extends javax.swing.JFrame {
     private javax.swing.JPanel Content;
     private javax.swing.JPanel LoginForm;
     private javax.swing.JLabel LoginTItle;
+    private javax.swing.JComboBox<String> cboDestino;
+    private javax.swing.JComboBox<String> cboOrigen;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;

@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class VueloController {
     public void registrar( Vuelo vuelo )
     {
-        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYVueloPU");
+        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         cl.getTransaction().begin();
         cl.persist(vuelo);
@@ -20,7 +20,7 @@ public class VueloController {
 
 
     public List<Vuelo> listar(){
-        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYVueloPU");
+        EntityManagerFactory clf = Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         TypedQuery<Vuelo> query = cl.createQuery("SELECT u FROM Vuelo u ", Vuelo.class);
         List<Vuelo> results = query.getResultList();
@@ -28,7 +28,7 @@ public class VueloController {
     }
 
     public Vuelo recuperarVueloById(int id){
-        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYVueloPU");
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         Vuelo Vuelo = cl.createQuery("Select u from Vuelo u WHERE u.id = :id", Vuelo.class).setParameter("id", id).getSingleResult();
         cl.close();
@@ -37,12 +37,22 @@ public class VueloController {
     }
 
     public Vuelo recuperarVueloByNombre(String nombreVuelo){
-        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYVueloPU");
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager cl = clf.createEntityManager();
         Vuelo Vuelo = cl.createQuery("Select u from Vuelo u WHERE u.nombreVuelo = :nombreVuelo", Vuelo.class).setParameter("nombreVuelo", nombreVuelo).getSingleResult();
         cl.close();
         clf.close();
         return Vuelo;
+    }
+    
+    public List<Vuelo> recuperarDestinosByOrigen(String ciudad){
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
+        EntityManager cl = clf.createEntityManager();
+        TypedQuery<Vuelo> query = cl.createQuery("Select a from Vuelo a WHERE a.ciudadOrigen = :ciudad", Vuelo.class).setParameter("ciudad", ciudad);
+        List<Vuelo> results = query.getResultList();
+        cl.close();
+        clf.close();
+        return results;
     }
 
     public void imprimir(List<Vuelo> Vuelos){
@@ -52,7 +62,7 @@ public class VueloController {
     }
 
     public void eliminar(){
-        EntityManagerFactory emf= Persistence.createEntityManagerFactory("PRYVueloPU");
+        EntityManagerFactory emf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
         EntityManager em= emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("Delete from Vuelo").executeUpdate();

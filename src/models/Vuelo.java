@@ -8,6 +8,8 @@ public class Vuelo {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int id;
+    private String ciudadOrigen;
+    private String ciudadDestino;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "vuelo")
     private List<Reserva> reserva;
@@ -24,11 +26,15 @@ public class Vuelo {
     public Vuelo() {
     }
 
-    public Vuelo(List<Reserva> reserva, Aeropuerto aeropuerto, Avion avion) {
-        this.reserva = reserva;
+    public Vuelo(String ciudadOrigen, String ciudadDestino, Aeropuerto aeropuerto, Avion avion, Piloto piloto) {
+        this.ciudadOrigen = ciudadOrigen;
+        this.ciudadDestino = ciudadDestino;
         this.aeropuerto = aeropuerto;
         this.avion = avion;
+        this.piloto = piloto;
     }
+
+
 
     public int getId() {
         return id;
@@ -61,6 +67,32 @@ public class Vuelo {
     public void setAvion(Avion avion) {
         this.avion = avion;
     }
+
+    public String getCiudadOrigen() {
+        return ciudadOrigen;
+    }
+
+    public void setCiudadOrigen(String ciudadOrigen) {
+        this.ciudadOrigen = ciudadOrigen;
+    }
+
+    public String getCiudadDestino() {
+        return ciudadDestino;
+    }
+
+    public void setCiudadDestino(String ciudadDestino) {
+        this.ciudadDestino = ciudadDestino;
+    }
+
+    public Piloto getPiloto() {
+        return piloto;
+    }
+
+    public void setPiloto(Piloto piloto) {
+        this.piloto = piloto;
+    }
+    
+    
 
     @Override
     public String toString() {
