@@ -13,6 +13,7 @@ public class Avion {
     private int id;
     private String modelo;
     private int numAsientos;
+    private int numAsiDisponibles;
     private String Fabricante;
 
     @ManyToOne
@@ -24,11 +25,12 @@ public class Avion {
     public Avion() {
     }
 
-    public Avion(String modelo, int numAsientos, String Fabricante, Aeropuerto aeropuerto) {
+    public Avion(String modelo, int numAsientos, String Fabricante, Aeropuerto aeropuerto, int numAsiDisponibles) {
         this.modelo = modelo;
         this.numAsientos = numAsientos;
         this.Fabricante = Fabricante;
         this.aeropuerto = aeropuerto;
+        this.numAsiDisponibles = numAsiDisponibles;
         this.vuelos = new ArrayList<Vuelo>();
     }
 
@@ -80,9 +82,19 @@ public class Avion {
         this.vuelos = vuelos;
     }
 
+    public int getNumAsiDisponibles() {
+        return numAsiDisponibles;
+    }
+
+    public void setNumAsiDisponibles(int numAsiDisponibles) {
+        this.numAsiDisponibles = numAsiDisponibles;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return "Avion{" + "id=" + id + ", modelo=" + modelo + ", numAsientos=" + numAsientos + ", Fabricante=" + Fabricante + ", aeropuerto=" + aeropuerto + ", vuelos=" + vuelos + '}';
+        return "Avion{" + "id=" + id + ", modelo=" + modelo + ", numAsientos=" + numAsientos + ", Fabricante=" + Fabricante + ", aeropuerto=" + aeropuerto;
     }
     
     

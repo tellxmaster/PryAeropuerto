@@ -412,22 +412,32 @@ public class AdminForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarPilotoActionPerformed
 
     private void btnRegistrarAvionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAvionActionPerformed
-        String fabricante = txtFabricante.getText();
-        String modelo = txtModelo.getText();
-        int numAsientos = Integer.parseInt(txtNumAsientos.getText());
-        Aeropuerto aeropuerto = aeropuertoService.recuperarAeropuetoByNombre(cboAeropuertosAv.getSelectedItem().toString());
-        Avion avion = new Avion(modelo, numAsientos, fabricante, aeropuerto);
-        avion.toString();
-        avionService.guardar(avion);
+        try{
+            String fabricante = txtFabricante.getText();
+            String modelo = txtModelo.getText();
+            int numAsientos = Integer.parseInt(txtNumAsientos.getText());
+            Aeropuerto aeropuerto = aeropuertoService.recuperarAeropuetoByNombre(cboAeropuertosAv.getSelectedItem().toString());
+            Avion avion = new Avion(modelo, numAsientos, fabricante, aeropuerto, numAsientos);
+            avion.toString();
+            avionService.guardar(avion);
+            JOptionPane.showMessageDialog(null, "Avion agregado correctamente");
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error: "+ex.getMessage());
+        }
     }//GEN-LAST:event_btnRegistrarAvionActionPerformed
 
     private void btnRegistrarAeropuertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAeropuertosActionPerformed
-        String pais = txtPaisAeropuerto.getText();
-        String nombre = txtAeropuertoNombre.getText();
-        String provincia = txtProvinciaNombre.getText();
-        String ciudad = txtCiudadAero.getText();
-        Aeropuerto aeropuerto = new Aeropuerto(nombre,ciudad,provincia,pais);
-        aeropuertoService.guardar(aeropuerto);
+        try{
+            String pais = txtPaisAeropuerto.getText();
+            String nombre = txtAeropuertoNombre.getText();
+            String provincia = txtProvinciaNombre.getText();
+            String ciudad = txtCiudadAero.getText();
+            Aeropuerto aeropuerto = new Aeropuerto(nombre,ciudad,provincia,pais);
+            aeropuertoService.guardar(aeropuerto);
+            JOptionPane.showMessageDialog(null, "Aeropuerto agregado correctamente");
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error: "+ex.getMessage());
+        }
     }//GEN-LAST:event_btnRegistrarAeropuertosActionPerformed
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked

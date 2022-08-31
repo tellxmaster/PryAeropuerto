@@ -42,6 +42,29 @@ public class AvionController {
         clf.close();
         return Avion;
     }
+    
+    public void updateAsientosDisponibles(int numAsientos, int comprados, Avion avion){
+        int disponibles = numAsientos - comprados;
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
+        EntityManager cl = clf.createEntityManager();
+        cl.getTransaction().begin();
+        cl.find(Avion.class, avion.getId());
+        avion.setNumAsiDisponibles(disponibles);
+        cl.merge(avion);
+        cl.getTransaction().commit();
+        cl.close();
+        clf.close();
+    }
+    
+    public int getNumAsientos(int id){
+        EntityManagerFactory clf= Persistence.createEntityManagerFactory("PRYAeropuertoPU");
+        EntityManager cl = clf.createEntityManager();
+        Avion avion = cl.createQuery("Select a from Avion a WHERE a.id = :id", Avion.class).setParameter("id", id).getSingleResult();
+        cl.close();
+        clf.close();
+        int numAsientos = avion.getNumAsientos();
+        return numAsientos;
+    }
 
     public void imprimir(List<Avion> Avions){
         for(Avion Avion : Avions){

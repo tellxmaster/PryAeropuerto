@@ -71,8 +71,8 @@ public class LoginForm extends javax.swing.JFrame {
         LoginForm.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 304, 208, 43));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon-login.png"))); // NOI18N
-        LoginForm.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 65, 208, -1));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add-icon.png"))); // NOI18N
+        LoginForm.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 65, 208, 110));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("¿No tienes cuenta? ");

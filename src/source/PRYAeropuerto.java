@@ -6,8 +6,10 @@ package source;
 
 import java.util.Date;
 import models.Pasajero;
+import models.TipoReserva;
 import models.Usuario;
 import services.PasajeroService;
+import services.TipoReservaService;
 import services.UsuarioService;
 import views.LoginForm;
 
@@ -22,16 +24,11 @@ public class PRYAeropuerto {
     public static void main(String[] args) {
        LoginForm lf = new LoginForm();
        lf.setVisible(true);
-       /*PasajeroService pasajeroService = new PasajeroService();
-       UsuarioService usuarioService = new UsuarioService();
-       Date fecha_nacimiento = new Date();
-       Usuario usuario = new Usuario("eitelleria", "123456789","admin");
-       Pasajero pasajero = new Pasajero("Elias", "Telleria", "Quito", "0995794733", "eitelleria@espe.edu.ec", fecha_nacimiento);
-       usuario.setPasajero(pasajero);
-       pasajero.setUsuario(usuario);
-       
-       //usuarioService.guardar(usuario);
-       pasajeroService.guardar(pasajero);*/
+       /*TipoReservaService reservaService = new TipoReservaService();
+       TipoReserva tipo1 = new TipoReserva("Estandar");
+       TipoReserva tipo2 = new TipoReserva("Ejecutivo");
+       reservaService.guardar(tipo1);
+       reservaService.guardar(tipo2);*/
        
     }
     

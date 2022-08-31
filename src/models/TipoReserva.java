@@ -2,6 +2,7 @@
 package models;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,9 +18,9 @@ public class TipoReserva {
     public TipoReserva() {
     }
 
-    public TipoReserva(String nombreTipo, List<Reserva> reserva) {
+    public TipoReserva(String nombreTipo) {
         this.nombreTipo = nombreTipo;
-        this.reserva = reserva;
+        this.reserva = new ArrayList<Reserva>();
     }
 
     public int getId() {

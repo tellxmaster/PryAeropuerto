@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package services;
 
 import controllers.AeropuertoController;
@@ -10,10 +7,7 @@ import java.util.List;
 import models.Aeropuerto;
 import models.Avion;
 
-/**
- *
- * @author tellxmaster
- */
+
 public class AvionService {
     private static final AvionController ac = new AvionController();
     
@@ -35,5 +29,13 @@ public class AvionService {
 
     public void eliminar(){
         ac.eliminar();
+    }
+    
+    public void updateAsientosDisponibles(int numAsientos, int comprados, Avion avion){
+        ac.updateAsientosDisponibles(numAsientos,comprados, avion);
+    }
+    
+    public int getNumAsientos(int id){
+        return ac.getNumAsientos(id);
     }
 }

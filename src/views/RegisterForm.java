@@ -171,28 +171,35 @@ public class RegisterForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
-        String telefono = txtTelefono.getText();
-        String direccion = txtDireccion.getText();
-        String email = txtEmail.getText();
-        String nombreUsuario = txtUsuario.getText();
-        String pass = Hash.sha1(new String(txtPassword.getPassword()));
-        Date fechaNac = null;
-        try {
-            fechaNac = new SimpleDateFormat("yyyy-MM-dd").parse(txtFechaNac.getText());
-        } catch (ParseException ex) {
-            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+        try{
+            if(!txtNombre.getText().equals("") && !txtTelefono.getText().equals("") && !txtTelefono.getText().equals("") && !txtDireccion.getText().equals("") && !txtEmail.getText().equals("")  && !txtUsuario.getText().equals("") && !txtPassword.getPassword().equals("")){
+                String nombre = txtNombre.getText();
+                String apellido = txtApellido.getText();
+                String telefono = txtTelefono.getText();
+                String direccion = txtDireccion.getText();
+                String email = txtEmail.getText();
+                String nombreUsuario = txtUsuario.getText();
+                String pass = Hash.sha1(new String(txtPassword.getPassword()));
+                Date fechaNac = null;
+                try {
+                    fechaNac = new SimpleDateFormat("yyyy-MM-dd").parse(txtFechaNac.getText());
+                } catch (ParseException ex) {
+                    Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                Usuario usuario = new Usuario(nombreUsuario, pass, "user");
+                Pasajero pasajero = new Pasajero(nombre, apellido, direccion, telefono, email, fechaNac);
+                usuario.setPasajero(pasajero);
+                pasajero.setUsuario(usuario);
+
+                pasajeroService.guardar(pasajero);
+                JOptionPane.showMessageDialog(null, "Usuario Registrado Correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "Es necesario rellenar todos los datos");
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error: "+ex.getMessage());
         }
-
-        Usuario usuario = new Usuario(nombreUsuario, pass, "admin");
-        Pasajero pasajero = new Pasajero(nombre, apellido, direccion, telefono, email, fechaNac);
-        usuario.setPasajero(pasajero);
-        pasajero.setUsuario(usuario);
-
-        pasajeroService.guardar(pasajero);
-        JOptionPane.showMessageDialog(null, "Usuario Registrado Correctamente");
-        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
